@@ -8,10 +8,10 @@ static Graphics::Mesh *poolTable, *poolball;
 
 int main()
 {
-  Graphics::Window::init(1024, 768, "OpenGL Pool");
+  Graphics::Window::create(800, 600, "OpenGL Pool");
 
-  poolball = new Graphics::Mesh("data/poolball.obj");
   poolTable = new Graphics::Mesh("data/table.obj");
+  poolball = new Graphics::Mesh("data/poolball.obj");
 
   Graphics::Window::setDrawCallback([]() {
     poolTable->draw();
