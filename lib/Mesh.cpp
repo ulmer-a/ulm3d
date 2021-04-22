@@ -81,7 +81,7 @@ namespace Graphics {
     printf("%s: mesh loaded: %zu vertices, %zu triangles\n",
            objFile.c_str(), m_vertices.size(), m_triangles.size());
 
-    m_buffer = new VertexBuffer(m_vertices.data(), m_vertices.size(),
-                                m_indices.data(), m_indices.size());
+    setData(m_vertices.data(), m_vertices.size(),
+            m_indices.data(), m_indices.size());
   }
 }
