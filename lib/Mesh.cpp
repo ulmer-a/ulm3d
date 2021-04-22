@@ -6,6 +6,8 @@
 #include <fstream>
 #include <sstream>
 
+#include "VertexBuffer.h"
+
 namespace Graphics {
 
   Mesh::Mesh(const std::string &objFile)
@@ -23,11 +25,11 @@ namespace Graphics {
       if (line.substr(0, 2) == "v ")
       {
         std::istringstream vStream(line.substr(2));
-        double x, y, z;
+        float x, y, z;
         vStream >> x;
         vStream >> y;
         vStream >> z;
-        m_vertices.push_back(glm::vec3(x, y, z));
+        m_vertices.push_back({x, y, z});
       }
       else if (line.substr(0, 2) == "vt")
       {
@@ -69,11 +71,17 @@ namespace Graphics {
         face.n2 = n2 - 1;
         face.n3 = n3 - 1;
 
+        m_indices.push_back(face.v1);
+        m_indices.push_back(face.v2);
+        m_indices.push_back(face.v3);
         m_triangles.push_back(face);
       }
     }
 
     printf("%s: mesh loaded: %zu vertices, %zu triangles\n",
            objFile.c_str(), m_vertices.size(), m_triangles.size());
+
+    m_buffer = new VertexBuffer(m_vertices.data(), m_vertices.size(),
+                                m_indices.data(), m_indices.size());
   }
 }

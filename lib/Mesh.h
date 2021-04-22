@@ -4,7 +4,11 @@
 #include <vector>
 #include <string>
 
+#include "VertexBuffer.h"
+
 namespace Graphics {
+
+  class VertexBuffer;
 
   struct Face
   {
@@ -18,11 +22,17 @@ namespace Graphics {
     public:
       Mesh(const std::string& objFile);
 
+      void draw() { m_buffer->drawTriangles(); }
+
     private:
-      std::vector<glm::vec3> m_vertices;
+      std::vector<Graphics::VertexBuffer::Vertex> m_vertices;
+      std::vector<unsigned> m_indices;
+
       std::vector<glm::vec2> m_texCoords;
       std::vector<glm::vec3> m_normals;
       std::vector<Face> m_triangles;
+
+      VertexBuffer* m_buffer;
   };
 
 }

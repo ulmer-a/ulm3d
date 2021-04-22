@@ -6,15 +6,17 @@
 #include <SFML/Graphics.hpp>
 #include <GL/glew.h>
 
-namespace Graphics {
-  namespace Renderer {
-    void render();
-  }
-}
 
 static sf::Window* s_window;
 static unsigned s_width, s_height;
 static void (*resizeCallback)(unsigned width, unsigned height) = nullptr;
+static void (*drawCallback)() = nullptr;
+
+
+void Graphics::Window::setDrawCallback(void (*draw)())
+{
+  drawCallback = draw;
+}
 
 void Graphics::Window::init(unsigned width, unsigned height, const std::string &title)
 {
@@ -53,14 +55,15 @@ void Graphics::Window::exec()
 
         glViewport(0, 0, s_width, s_height);
 
-        // printf("Window resized: (%u, %u)\n", s_width, s_height);
-
         if (resizeCallback)
           resizeCallback(s_width, s_height);
       }
     }
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    if(drawCallback)
+      drawCallback();
 
     s_window->display();
   }

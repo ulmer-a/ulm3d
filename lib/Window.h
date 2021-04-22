@@ -7,6 +7,8 @@ namespace Graphics {
 
     void init(unsigned width, unsigned height, const std::string& title);
 
+    void setDrawCallback(void (*draw)());
+
     void exec();
 
   }

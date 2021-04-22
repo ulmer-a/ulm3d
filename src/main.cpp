@@ -2,13 +2,19 @@
 
 #include "Window.h"
 #include "Mesh.h"
+#include "VertexBuffer.h"
+
+static Graphics::Mesh *poolTable, *poolball;
 
 int main()
 {
   Graphics::Window::init(1024, 768, "OpenGL Pool");
 
-  Graphics::Mesh poolTable("data/table.obj");
-  Graphics::Mesh poolball("data/poolball.obj");
+  poolball = new Graphics::Mesh("data/poolball.obj");
+  poolTable = new Graphics::Mesh("data/table.obj");
 
+  Graphics::Window::setDrawCallback([]() {
+    poolTable->draw();
+  });
   Graphics::Window::exec();
 }
