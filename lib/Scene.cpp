@@ -10,8 +10,7 @@ namespace Ulm3D {
     , m_height(height)
     , m_camera(camera)
   {
-    m_projectionMat = glm::perspective(
-          glm::radians(45.0f), (float)width / (float)height, 1.0f, 100.0f);
+    updateProjectionMat();
   }
 
   void Scene::addObject(std::shared_ptr<MeshObject> object)
@@ -25,6 +24,20 @@ namespace Ulm3D {
     {
       obj->draw(*this);
     }
+  }
+
+  void Scene::updateProjectionMat()
+  {
+    m_projectionMat = glm::perspective(
+          glm::radians(45.0f), (float)m_width / (float)m_height, 1.0f, 100.0f);
+  }
+
+  void Scene::resized(unsigned width, unsigned height)
+  {
+    m_width = width;
+    m_height = height;
+
+    updateProjectionMat();
   }
 
 }

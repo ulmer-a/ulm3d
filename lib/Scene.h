@@ -28,6 +28,9 @@ namespace Ulm3D {
 
       void render();
 
+      void updateProjectionMat();
+      void resized(unsigned width, unsigned height);
+
     private:
       const Camera& m_camera;
       glm::mat4 m_VP, m_projectionMat;

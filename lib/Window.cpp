@@ -12,6 +12,15 @@ static GLFWwindow* s_window;
 static unsigned s_width, s_height;
 static Ulm3D::Scene* s_scene = nullptr;
 
+static void resizeCallback(GLFWwindow* window, int width, int height)
+{
+  s_width = width;
+  s_height = height;
+  s_scene->resized(s_width, s_height);
+
+  glViewport(0, 0, width, height);
+}
+
 void Ulm3D::Window::create(unsigned width, unsigned height,
                               const std::string &title)
 {
@@ -29,6 +38,8 @@ void Ulm3D::Window::create(unsigned width, unsigned height,
     exit(1);
   }
 
+  glfwSetWindowSizeCallback(s_window, resizeCallback);
+
   glfwMakeContextCurrent(s_window);
 
   s_width = width;
@@ -40,6 +51,8 @@ void Ulm3D::Window::create(unsigned width, unsigned height,
     printf("GLEW: error: initialization failed\n");
     exit(1);
   }
+
+  glEnable(GL_DEPTH_TEST);
 }
 
 void Ulm3D::Window::exec()

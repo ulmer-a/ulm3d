@@ -12,7 +12,7 @@ std::vector<std::shared_ptr<Ulm3D::Mesh>> s_scene;
 
 int main()
 {
-  unsigned width = 800, height = 600;
+  unsigned width = 1024, height = 768;
   Ulm3D::Window::create(width, height, "OpenGL Pool");
 
   // create a camera looking towards the origin
