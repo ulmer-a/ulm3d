@@ -8,6 +8,8 @@ add_library(gfx STATIC
     lib/Window.cpp
     lib/Mesh.cpp
     lib/VertexBuffer.cpp
+    lib/ShaderProgram.h
+    lib/ShaderProgram.cpp
 )
 target_link_libraries(gfx -lglfw -lGL -lGLEW)
 
