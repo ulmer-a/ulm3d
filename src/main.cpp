@@ -16,13 +16,17 @@ int main()
   Ulm3D::Window::create(width, height, "OpenGL Pool");
 
   // create a camera looking towards the origin
-  Ulm3D::Camera camera(glm::vec3(0.1f, 2.0f, -5.0f));
+  Ulm3D::Camera camera(glm::vec3(3.0f, 2.0f, -2.0f));
 
   // Setup a vertex shader
   Ulm3D::ShaderProgram shaders;
   {
     Ulm3D::Shader vertexShader("data/shader/vertex1.glsl", Ulm3D::Shader::VertexShader);
     shaders.addShader(vertexShader);
+
+    Ulm3D::Shader fragShader("data/shader/fragment1.glsl", Ulm3D::Shader::FragmentShader);
+    shaders.addShader(fragShader);
+
     shaders.link();
   }
 
