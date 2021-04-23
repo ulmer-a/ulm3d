@@ -4,6 +4,7 @@
 #include <cstdlib>
 
 #include <GL/glew.h>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace Graphics {
 
@@ -59,6 +60,16 @@ namespace Graphics {
   void ShaderProgram::addShader(const Shader &shader)
   {
     glAttachShader(m_id, shader.getID());
+  }
+
+  unsigned ShaderProgram::getUniform(const char *name)
+  {
+    return glGetUniformLocation(m_id, name);
+  }
+
+  void ShaderProgram::uniformMat4(unsigned id, const glm::mat4 &mat)
+  {
+    glUniformMatrix4fv(id, 1, GL_FALSE, glm::value_ptr(mat));
   }
 
   void ShaderProgram::link()

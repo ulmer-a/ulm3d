@@ -2,6 +2,7 @@
 
 #include <string>
 #include <GL/glew.h>
+#include <glm/mat4x4.hpp>
 
 namespace Graphics {
 
@@ -38,6 +39,9 @@ namespace Graphics {
       ~ShaderProgram();
 
       void addShader(const Shader& shader);
+
+      unsigned getUniform(const char* name);
+      void uniformMat4(unsigned id, const glm::mat4& mat);
 
       void link();
       void use();
