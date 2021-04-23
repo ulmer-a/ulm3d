@@ -24,6 +24,6 @@ add_library(gfx STATIC
 )
 target_link_libraries(gfx -lglfw -lGL -lGLEW)
 
-add_executable(pool src/main.cpp)
-target_include_directories(pool PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/lib)
-target_link_libraries(pool gfx)
+add_executable(SandboxApp src/main.cpp)
+target_include_directories(SandboxApp PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/lib)
+target_link_libraries(SandboxApp gfx)
