@@ -4,44 +4,31 @@
 #include <GL/glew.h>
 #include <glm/mat4x4.hpp>
 
-namespace Graphics {
+#include "Shader.h"
 
-  class ShaderProgram;
-
-  class Shader
-  {
-      friend class ShaderProgram;
-
-    public:
-      enum ShaderType
-      {
-        VertexShader = GL_VERTEX_SHADER,
-        FragmentShader = GL_FRAGMENT_SHADER
-      };
-
-      Shader(const char *filename,
-             ShaderType type);
-
-      static std::string fromFile(const char *filename);
-
-    protected:
-      unsigned getID() const { return m_shaderID; }
-
-    private:
-      ShaderType m_type;
-      unsigned m_shaderID;
-  };
+namespace Ulm3D {
 
   class ShaderProgram
   {
     public:
+      /* Creates and deletes an OpenGL shader program object */
       ShaderProgram();
       ~ShaderProgram();
 
+      /* Every shader has to be attached to a ShaderProgram,
+       * so it can be linked and used. After calling addShader(),
+       * the Shader object can be disposed. */
       void addShader(const Shader& shader);
 
+      /* Get a handle to a uniform by it's name */
       unsigned getUniform(const char* name);
-      void uniformMat4(unsigned id, const glm::mat4& mat);
+
+      /* Set uniform with value 'id' to the specified value, so
+       * the new value becomes available in the shader program. */
+      void setUniform(unsigned id, float value);
+      void setUniform(unsigned id, const glm::vec2& vec);
+      void setUniform(unsigned id, const glm::vec3& vec);
+      void setUniform(unsigned id, const glm::mat4& mat);
 
       void link();
       void use();

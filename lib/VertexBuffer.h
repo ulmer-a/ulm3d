@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <memory>
 
-namespace Graphics {
+namespace Ulm3D {
 
   struct Vertex
   {

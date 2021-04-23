@@ -4,7 +4,7 @@
 #include "VertexBuffer.h"
 #include "Mesh.h"
 
-namespace Graphics {
+namespace Ulm3D {
 
   VertexBuffer::VertexBuffer()
   {

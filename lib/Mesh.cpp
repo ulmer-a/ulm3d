@@ -1,14 +1,13 @@
-#include "Mesh.h"
-
 #include <cstdio>
 #include <cstdlib>
 #include <string>
 #include <fstream>
 #include <sstream>
 
+#include "Mesh.h"
 #include "VertexBuffer.h"
 
-namespace Graphics {
+namespace Ulm3D {
 
   Mesh::Mesh(const std::string &objFile)
   {

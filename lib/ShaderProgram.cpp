@@ -1,51 +1,13 @@
-#include "ShaderProgram.h"
-
 #include <cstdio>
 #include <cstdlib>
 
 #include <GL/glew.h>
 #include <glm/gtc/type_ptr.hpp>
 
-namespace Graphics {
+#include "Shader.h"
+#include "ShaderProgram.h"
 
-  Shader::Shader(const char* filename,
-                 Shader::ShaderType type)
-    : m_type(type)
-  {
-    m_shaderID = glCreateShader(type);
-
-    std::string sourceCode = fromFile(filename);
-    const char* source = sourceCode.c_str();
-    glShaderSource(m_shaderID, 1, &source, nullptr);
-    glCompileShader(m_shaderID);
-
-    int success;
-    char buffer[512];
-    glGetShaderiv(m_shaderID, GL_COMPILE_STATUS, &success);
-    if(!success)
-    {
-      glGetShaderInfoLog(m_shaderID, 512, NULL, buffer);
-      fprintf(stderr, "Shader compilation failed\nerror: %s\n", buffer);
-      exit(1);
-    }
-  }
-
-  std::string Shader::fromFile(const char *filename)
-  {
-    FILE* f = fopen(filename, "r");
-    if (!f)
-    {
-      fprintf(stderr, "error: cannot open file: %s\n", filename);
-      exit(1);
-    }
-
-    static const std::size_t bufferSize = 1024*32;
-    char* buffer = (char*)alloca(bufferSize);
-    std::size_t len = fread(buffer, 1, bufferSize, f);
-    buffer[len] = 0;
-
-    return std::string(buffer);
-  }
+namespace Ulm3D {
 
   ShaderProgram::ShaderProgram()
   {
@@ -67,7 +29,7 @@ namespace Graphics {
     return glGetUniformLocation(m_id, name);
   }
 
-  void ShaderProgram::uniformMat4(unsigned id, const glm::mat4 &mat)
+  void ShaderProgram::setUniform(unsigned id, const glm::mat4 &mat)
   {
     glUniformMatrix4fv(id, 1, GL_FALSE, glm::value_ptr(mat));
   }

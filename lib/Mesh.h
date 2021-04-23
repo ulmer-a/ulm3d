@@ -1,12 +1,12 @@
 #pragma once
 
-#include <glm/glm.hpp>
 #include <vector>
 #include <string>
+#include <glm/glm.hpp>
 
 #include "VertexBuffer.h"
 
-namespace Graphics {
+namespace Ulm3D {
 
   struct Face
   {
@@ -21,7 +21,7 @@ namespace Graphics {
       Mesh(const std::string& objFile);
 
     private:
-      std::vector<Graphics::Vertex> m_vertices;
+      std::vector<Ulm3D::Vertex> m_vertices;
       std::vector<unsigned> m_indices;
 
       std::vector<glm::vec2> m_texCoords;

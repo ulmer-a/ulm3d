@@ -3,44 +3,34 @@
 #include "Window.h"
 #include "Mesh.h"
 #include "ShaderProgram.h"
+#include "Camera.h"
+#include "Scene.h"
 
 #include <glm/gtx/transform.hpp>
 
-std::vector<std::shared_ptr<Graphics::Mesh>> s_scene;
+std::vector<std::shared_ptr<Ulm3D::Mesh>> s_scene;
 
 int main()
 {
   unsigned width = 800, height = 600;
-  Graphics::Window::create(width, height, "OpenGL Pool");
+  Ulm3D::Window::create(width, height, "OpenGL Pool");
 
-  s_scene.push_back(std::make_shared<Graphics::Mesh>("data/table.obj"));
-  s_scene.push_back(std::make_shared<Graphics::Mesh>("data/poolball.obj"));
+  // create a camera looking towards the origin
+  Ulm3D::Camera camera(glm::vec3(0.1f, 2.0f, -5.0f));
 
-  Graphics::ShaderProgram shaderProg;
+  // Setup a vertex shader
+  Ulm3D::ShaderProgram shaders;
   {
-    Graphics::Shader vertexShader(
-          "data/shader/vertex1.glsl", Graphics::Shader::VertexShader);
-    shaderProg.addShader(vertexShader);
-    shaderProg.link();
+    Ulm3D::Shader vertexShader("data/shader/vertex1.glsl", Ulm3D::Shader::VertexShader);
+    shaders.addShader(vertexShader);
+    shaders.link();
   }
-  auto mvpId = shaderProg.getUniform("u_MVP");
-  shaderProg.use();
 
-  auto view = glm::lookAt(
-    glm::vec3(0.1f, 2.0f, -5.0f), // camera
-    glm::vec3(0.0f, 0.0f, 0.0f),  // lookat point
-    glm::vec3(0.0f, 1.0f, 0.0f)   // up-Vector
-  );
-  auto projection = glm::perspective(glm::radians(45.0f), (float)width/(float)height,
-                                     1.0f, 100.0f);
-  auto mvp = projection * view;
-  shaderProg.uniformMat4(mvpId, mvp);
+  // create a scene consisting of two objects
+  Ulm3D::Scene scene(width, height, camera);
+  scene.addObject(std::make_shared<Ulm3D::MeshObject>("data/table.obj", &shaders));
+  scene.addObject(std::make_shared<Ulm3D::MeshObject>("data/poolball.obj", &shaders));
 
-  Graphics::Window::setDrawCallback([]() {
-    for (auto& obj : s_scene)
-    {
-      obj->render();
-    }
-  });
-  Graphics::Window::exec();
+  Ulm3D::Window::setScene(&scene);
+  Ulm3D::Window::exec();
 }
